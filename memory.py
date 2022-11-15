@@ -13,3 +13,13 @@ class Memory:
                 self.bus[memory_bus] = value
                 print(f"Adding value: {value} to memory bus: {memory_bus}")
 
+    def write_memory(self, address, value):
+        self.bus[address] = value
+        print(f"Adding value: {value} to memory bus: {address}")
+
+    def search_memory(self, address):
+        num = address[1]
+        if self.bus.get('{0:08b}'.format(int(num))) is not None:
+            return self.bus.get('{0:08b}'.format(int(num)))
+        return 0
+
