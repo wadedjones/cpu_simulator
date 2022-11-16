@@ -3,22 +3,26 @@
 from memory import Memory
 from cache import Cache
 
+# Instruction list should be registers
+# CPU counter should count up and be in sync with registers
+
 class CPU:
-    def __init__(self, data_file, instruction_file):
-        self.data_file = data_file
-        self.instruction_file = instruction_file
+    def __init__(self):
         self.memory_bus = Memory()
         self.cache = Cache()
-        self.instructions = self.read_instructions()
         self.counter = 0
-        self.register = [0 for x in range(8)]
+        self.register = ['' for i in range(32)]
 
     def read_instructions(self):
-        instruction_list = []
         with open(self.instruction_file, 'r') as file:
             for line in file.readlines():
-                instruction_list.append(tuple(line.strip().split(',')))
-        return instruction_list
+                # insert data into register at [cpu_counter] index
+                self.register.insert(self.counter, tuple(line.strip().split(',')))
+                if self.counter > 32:
+                    self.counter = 0
+                else:
+                    self.counter += 1
+        return 
 
     def read_write_data(self):
         with open(self.data_file, 'r') as file:
